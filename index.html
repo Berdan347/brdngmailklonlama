@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alias Paneli (Demo)</title>
+  <style>
+    :root{
+      --bg0:#070716;
+      --bg1:#0b0b22;
+      --card:#0f102b;
+      --line: rgba(190, 90, 255, .35);
+      --line2: rgba(0, 235, 255, .15);
+      --txt:#e9e6ff;
+      --muted:#b8b4da;
+      --accent:#b44cff;
+      --accent2:#ff4fd8;
+      --good:#56f2c2;
+      --warn:#ffd36a;
+      --shadow: 0 0 0 1px rgba(180,76,255,.25), 0 10px 35px rgba(0,0,0,.55);
+      --glow: 0 0 24px rgba(180,76,255,.35), 0 0 60px rgba(255,79,216,.12);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 30% 10%, rgba(180,76,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(255,79,216,.10), transparent 60%),
+        radial-gradient(900px 800px at 60% 90%, rgba(0,235,255,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+    .stars:before, .stars:after{
+      content:"";
+      position:fixed; inset:0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.45), transparent 50%),
+        radial-gradient(1px 1px at 35% 70%, rgba(255,255,255,.35), transparent 50%),
+        radial-gradient(1px 1px at 60% 40%, rgba(255,255,255,.35), transparent 50%),
+        radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,.25), transparent 50%),
+        radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,.35), transparent 50%);
+      opacity:.35;
+      pointer-events:none;
+    }
+    .stars:after{
+      filter: blur(.4px);
+      opacity:.25;
+      transform: scale(1.12);
+    }
+
+    .wrap{max-width:1040px; margin:28px auto; padding:0 16px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:18px;
+    }
+    .crumb{
+      display:flex; gap:10px; align-items:center;
+      color:var(--muted); font-size:14px;
+    }
+    .crumb .back{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      user-select:none;
+    }
+    .topright{
+      display:flex; align-items:center; gap:10px; color:var(--muted); font-size:13px;
+    }
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(180,76,255,.35);
+      background: rgba(180,76,255,.10);
+      box-shadow: 0 0 18px rgba(180,76,255,.18);
+    }
+    .btn-outline{
+      padding:9px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,79,216,.45);
+      background: rgba(255,79,216,.10);
+      color:var(--txt);
+      box-shadow: 0 0 18px rgba(255,79,216,.14);
+      cursor:pointer;
+    }
+    .btn-outline:active{transform: translateY(1px)}
+    h1{
+      text-align:center;
+      margin:12px 0 6px;
+      font-size:32px;
+      letter-spacing:.2px;
+      color: #d8c7ff;
+      text-shadow: 0 0 18px rgba(180,76,255,.25);
+    }
+    .sub{
+      text-align:center;
+      color:var(--muted);
+      margin:0 0 18px;
+      font-size:14px;
+    }
+
+    .panel{
+      border-radius: var(--radius);
+      background: rgba(15,16,43,.65);
+      border: 1px solid rgba(180,76,255,.28);
+      box-shadow: var(--shadow), var(--glow);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(90deg, rgba(180,76,255,.15), rgba(255,79,216,.08), rgba(0,235,255,.06));
+      filter: blur(18px);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .panel-inner{position:relative; padding:18px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap:14px;
+    }
+    @media (max-width:860px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .field{
+      background: rgba(0,0,0,.18);
+      border:1px solid rgba(180,76,255,.22);
+      border-radius:14px;
+      padding:12px 12px;
+      box-shadow: 0 0 0 1px rgba(0,235,255,.08) inset;
+    }
+    .label{
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    input[type="text"], input[type="number"]{
+      width:100%;
+      padding:12px 12px;
+      font-size:15px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      outline:none;
+      box-shadow: 0 0 0 1px rgba(180,76,255,.12);
+    }
+    input:focus{
+      border-color: rgba(180,76,255,.55);
+      box-shadow: 0 0 0 3px rgba(180,76,255,.18), 0 0 26px rgba(180,76,255,.18);
+    }
+
+    .modes{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+    @media (max-width:860px){
+      .modes{grid-template-columns:1fr}
+    }
+    .mode{
+      padding:14px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+      min-height:74px;
+    }
+    .mode:hover{border-color: rgba(180,76,255,.35)}
+    .mode.active{
+      border-color: rgba(180,76,255,.55);
+      box-shadow: 0 0 0 1px rgba(180,76,255,.15), 0 0 22px rgba(180,76,255,.18);
+      background: rgba(180,76,255,.08);
+    }
+    .mode .title{
+      font-weight:650;
+      font-size:14px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .radio{
+      width:14px; height:14px; border-radius:50%;
+      border:2px solid rgba(184,180,218,.7);
+      box-shadow: 0 0 0 2px rgba(0,0,0,.25) inset;
+      position:relative;
+      flex:0 0 auto;
+    }
+    .mode.active .radio{border-color: rgba(180,76,255,.95)}
+    .mode.active .radio:after{
+      content:""; position:absolute; inset:3px;
+      border-radius:50%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 12px rgba(180,76,255,.35);
+    }
+    .mode .desc{margin-top:6px; color:var(--muted); font-size:12px; line-height:1.25}
+
+    .cta{
+      margin-top:14px;
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(180,76,255,.45);
+      background: linear-gradient(90deg, rgba(180,76,255,.16), rgba(255,79,216,.10));
+      color:var(--txt);
+      font-size:15px;
+      font-weight:650;
+      cursor:pointer;
+      box-shadow: 0 0 30px rgba(180,76,255,.18);
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+    .cta:active{transform: translateY(1px)}
+    .hint{
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(0,235,255,.18);
+      background: rgba(0,235,255,.06);
+      color: #cfefff;
+      font-size:12.5px;
+      line-height:1.35;
+    }
+    .hint strong{color:#eaffff}
+    .out{
+      margin-top:14px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.16);
+    }
+    .out-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:10px;
+    }
+    .out-head .muted{color:var(--muted); font-size:12px}
+    .mini{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .btn-mini{
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      cursor:pointer;
+      font-size:12.5px;
+    }
+    .btn-mini:hover{border-color: rgba(180,76,255,.35)}
+    .list{
+      margin:0; padding:0; list-style:none;
+      max-height:240px; overflow:auto;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .list li{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-size:13px;
+      color:#efeaff;
+    }
+    .list li:last-child{border-bottom:none}
+    .copy{
+      padding:6px 8px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      cursor:pointer;
+      font-size:12px;
+    }
+    .copy:hover{border-color: rgba(255,79,216,.35); color: var(--txt)}
+    footer{
+      text-align:center;
+      color: rgba(184,180,218,.75);
+      font-size:11.5px;
+      margin-top:14px;
+      opacity:.9;
+    }
+    .toast{
+      position:fixed;
+      left:50%; bottom:18px;
+      transform:translateX(-50%);
+      background: rgba(10,10,30,.85);
+      border:1px solid rgba(180,76,255,.35);
+      box-shadow: 0 0 20px rgba(180,76,255,.18);
+      color:var(--txt);
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="crumb">
+        <div class="back">← <span>Ana Sayfa</span></div>
+      </div>
+      <div class="topright">
+        <span>Kalan Süre</span>
+        <span class="pill" id="daysLeft">31 gün</span>
+        <button class="btn-outline" type="button">Çıkış</button>
+      </div>
+    </header>
+
+    <h1>Alias Üretim Paneli</h1>
+    <p class="sub">Gmail için <b>+tag</b> ve <b>nokta</b> varyasyonlarını üret (demo).</p>
+
+    <section class="panel">
+      <div class="panel-inner">
+        <div class="grid">
+          <div class="field">
+            <div class="label">Gmail Adresi</div>
+            <input id="email" type="text" placeholder="ornek@gmail.com" value="denemeyet@gmail.com" />
+          </div>
+
+          <div class="field">
+            <div class="label">Üretilecek Adet <span style="color:var(--muted);font-size:11px">(1–200)</span></div>
+            <input id="count" type="number" min="1" max="200" value="10" />
+          </div>
+        </div>
+
+        <div style="margin-top:14px; color:var(--muted); font-size:12px;">Varyasyon Türleri</div>
+        <div class="modes" id="modes">
+          <div class="mode active" data-mode="plus">
+            <div class="title"><span class="radio"></span> +1, +2, +3…</div>
+            <div class="desc">Plus (+tag) varyasyonları</div>
+          </div>
+          <div class="mode" data-mode="dot">
+            <div class="title"><span class="radio"></span> Nokta (.)</div>
+            <div class="desc">Nokta varyasyonları</div>
+          </div>
+          <div class="mode" data-mode="dotplus">
+            <div class="title"><span class="radio"></span> Nokta + Sayı</div>
+            <div class="desc">Kombinasyon (., +tag)</div>
+          </div>
+        </div>
+
+        <button class="cta" id="genBtn" type="button">✉️ Aliasları Üret</button>
+
+        <div class="hint">
+          <strong>Not:</strong> Gmail’de <b>nokta</b> ve <b>+tag</b> varyasyonları genellikle aynı inbox’a düşer.
+          Bu sayfa <b>sadece</b> alias üretir; giriş yapmaz, mail göndermez.
+        </div>
+
+        <div class="out" id="outBox" style="display:none">
+          <div class="out-head">
+            <div>
+              <div style="font-weight:650">Üretilen Aliaslar</div>
+              <div class="muted" id="outMeta"></div>
+            </div>
+            <div class="mini">
+              <button class="btn-mini" id="copyAll" type="button">Tümünü Kopyala</button>
+              <button class="btn-mini" id="clear" type="button">Temizle</button>
+            </div>
+          </div>
+          <ul class="list" id="list"></ul>
+        </div>
+
+        <footer>
+          Bu demo yalnızca alias listesi üretir. Güvenli kullanım kullanıcı sorumluluğundadır.
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">Kopyalandı ✅</div>
+
+  <script>
+    const emailEl = document.getElementById('email');
+    const countEl = document.getElementById('count');
+    const modesEl = document.getElementById('modes');
+    const genBtn = document.getElementById('genBtn');
+    const outBox = document.getElementById('outBox');
+    const outMeta = document.getElementById('outMeta');
+    const listEl = document.getElementById('list');
+    const copyAllBtn = document.getElementById('copyAll');
+    const clearBtn = document.getElementById('clear');
+    const toast = document.getElementById('toast');
+
+    let mode = 'plus';
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(()=> toast.classList.remove('show'), 1200);
+    }
+
+    modesEl.addEventListener('click', (e)=>{
+      const card = e.target.closest('.mode');
+      if(!card) return;
+      mode = card.dataset.mode;
+      [...modesEl.querySelectorAll('.mode')].forEach(x=>x.classList.remove('active'));
+      card.classList.add('active');
+    });
+
+    function parseGmail(addr){
+      const a = (addr || '').trim();
+      const m = a.match(/^([^@]+)@gmail\.com$/i);
+      if(!m) return null;
+      const local = m[1];
+      // Gmail'de nokta yok sayıldığı için normalize edelim (gösterimde yine orijinal değil, üretimde temel olsun)
+      const normalized = local.replace(/\./g,'');
+      return { local: normalized, domain: 'gmail.com' };
+    }
+
+    // Dot varyasyonları için: local'ın karakterleri arasına nokta koyma kombinasyonlarından üret (limitli)
+    function dotVariants(local, limit){
+      const chars = local.split('');
+      const n = chars.length;
+      if(n <= 1) return [local];
+      const maxMasks = 1 << (n - 1); // aralara nokta koy / koyma
+      const out = [];
+      // 0 mask = noktasız; onu da dahil edeceğiz ama tekilleştireceğiz.
+      for(let mask = 0; mask < maxMasks && out.length < limit; mask++){
+        let s = chars[0];
+        for(let i=0;i<n-1;i++){
+          if(mask & (1<<i)) s += '.';
+          s += chars[i+1];
+        }
+        out.push(s);
+      }
+      return out;
+    }
+
+    function uniq(arr){
+      const seen = new Set();
+      const out = [];
+      for(const x of arr){
+        if(!seen.has(x)){
+          seen.add(x);
+          out.push(x);
+        }
+      }
+      return out;
+    }
+
+    function makePlus(local, count){
+      const out = [];
+      for(let i=1;i<=count;i++){
+        out.push(`${local}+${i}@gmail.com`);
+      }
+      return out;
+    }
+
+    function makeDot(local, count){
+      const dots = dotVariants(local, Math.min(4096, count*5)); // biraz havuz
+      const picked = dots.slice(0, count).map(v => `${v}@gmail.com`);
+      return uniq(picked).slice(0, count);
+    }
+
+    function makeDotPlus(local, count){
+      const baseDots = dotVariants(local, Math.min(4096, count*5));
+      const out = [];
+      let tag = 1;
+      for(let i=0;i<baseDots.length && out.length < count;i++){
+        out.push(`${baseDots[i]}+${tag}@gmail.com`);
+        tag++;
+      }
+      return uniq(out).slice(0, count);
+    }
+
+    function render(items){
+      listEl.innerHTML = '';
+      items.forEach((item)=>{
+        const li = document.createElement('li');
+        const span = document.createElement('span');
+        span.textContent = item;
+
+        const btn = document.createElement('button');
+        btn.className = 'copy';
+        btn.type = 'button';
+        btn.textContent = 'Kopyala';
+        btn.addEventListener('click', async ()=>{
+          try{
+            await navigator.clipboard.writeText(item);
+            showToast('Kopyalandı ✅');
+          }catch{
+            showToast('Kopyalanamadı ❌');
+          }
+        });
+
+        li.appendChild(span);
+        li.appendChild(btn);
+        listEl.appendChild(li);
+      });
+    }
+
+    genBtn.addEventListener('click', ()=>{
+      const parsed = parseGmail(emailEl.value);
+      if(!parsed){
+        showToast('Sadece gmail.com adresi gir ✅ (ornek@gmail.com)');
+        emailEl.focus();
+        return;
+      }
+      let count = Number(countEl.value || 0);
+      count = Math.max(1, Math.min(200, count));
+
+      let items = [];
+      if(mode === 'plus') items = makePlus(parsed.local, count);
+      if(mode === 'dot') items = makeDot(parsed.local, count);
+      if(mode === 'dotplus') items = makeDotPlus(parsed.local, count);
+
+      outBox.style.display = 'block';
+      outMeta.textContent = `${count} adet • Mod: ${mode === 'plus' ? '+tag' : mode === 'dot' ? 'nokta' : 'nokta + tag'}`;
+      render(items);
+
+      // cache for copy all
+      outBox.dataset.items = JSON.stringify(items);
+    });
+
+    copyAllBtn.addEventListener('click', async ()=>{
+      const items = JSON.parse(outBox.dataset.items || "[]");
+      if(!items.length){ showToast('Liste boş'); return; }
+      try{
+        await navigator.clipboard.writeText(items.join('\n'));
+        showToast('Tümü kopyalandı ✅');
+      }catch{
+        showToast('Kopyalanamadı ❌');
+      }
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      outBox.style.display = 'none';
+      listEl.innerHTML = '';
+      outBox.dataset.items = "[]";
+      showToast('Temizlendi');
+    });
+  </script>
+</body>
+</html>
