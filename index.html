@@ -121,6 +121,14 @@
       font-size: 13px;
       transition: transform .12s ease, border-color .12s ease, filter .12s ease;
     }
+    
+    .navlink{
+  box-shadow: 0 0 0 1px rgba(34,211,238,.06) inset;
+}
+.navlink:active{
+  transform: translateY(0);
+}
+
     .navlink:hover{
       border-color: rgba(34,211,238,.28);
       transform: translateY(-1px);
@@ -574,9 +582,13 @@
           <ul class="list" id="list"></ul>
         </div>
 
-        <footer>
-          BRDN • Demo Panel • İletişim: Discord Profilim
-        </footer>
+       <footer>
+  BRDN • Demo Panel • İletişim:
+  <a href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener" style="color: var(--cyan); text-decoration:none; font-weight:900;">
+    Discord Profilim
+  </a>
+</footer>
+
 
       </div>
     </section>
