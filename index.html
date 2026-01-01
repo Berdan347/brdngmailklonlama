@@ -263,11 +263,11 @@ input:focus{outline:none;border-color:var(--accent)}
     <div class="logo"><span>✦</span></div>
     <h1>Alias Üretim Paneli</h1>
     <div class="topnav">
-      <a class="navlink" href="https://discord.com/users/816990858515709962" target="_blank">Discord Profil</a>
-      <a class="navlink" href="#" onclick="alert('Bu panel Gmail alias üretmek içindir.')">Kılavuz</a>
-    </div>
-    <p class="sub">Gmail için +tag ve nokta varyasyonları üretir (demo)</p>
-  </div>
+  <a class="navlink primary" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener">
+    Discord Profil
+  </a>
+  <button class="navlink" id="helpOpen" type="button">Kılavuz</button>
+</div>
 
   <section class="panel">
     <div class="grid">
@@ -337,7 +337,47 @@ document.getElementById("gen").onclick=()=>{
 };
 
 document.getElementById("reset").onclick=()=>location.reload();
+  // Kılavuz modal
+const helpOpen = document.getElementById("helpOpen");
+const helpModal = document.getElementById("helpModal");
+const helpClose = document.getElementById("helpClose");
+
+function openHelp(){
+  helpModal.classList.add("show");
+  helpModal.setAttribute("aria-hidden","false");
+}
+function closeHelp(){
+  helpModal.classList.remove("show");
+  helpModal.setAttribute("aria-hidden","true");
+}
+
+helpOpen?.addEventListener("click", openHelp);
+helpClose?.addEventListener("click", closeHelp);
+helpModal?.addEventListener("click", (e)=>{
+  if(e.target === helpModal) closeHelp();
+});
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape" && helpModal.classList.contains("show")) closeHelp();
+});
+
 </script>
+  
+<!-- KILAVUZ MODAL -->
+<div class="modal" id="helpModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Kılavuz">
+    <div class="modal-head">
+      <div class="modal-title">Kılavuz</div>
+      <button class="modal-close" id="helpClose" type="button">Kapat ✕</button>
+    </div>
+    <div class="modal-body">
+      <p><b>Bu panel</b>, Gmail için alias liste üretir. Mail göndermez.</p>
+      <p><b>+tag modu:</b> ad+1, ad+2 gibi üretir.</p>
+      <p><b>Nokta modu:</b> ad soyad -> a.d.s.o.y.a.d gibi örnek varyasyon üretir (demo mantığı).</p>
+      <p><b>Karma:</b> nokta + tag birleştirir.</p>
+      <p>⚠️ Not: Gmail’de nokta ve +tag çoğu zaman aynı inbox’a düşer.</p>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
