@@ -170,6 +170,89 @@ input:focus{outline:none;border-color:var(--accent)}
   transition:.2s;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+
+  /* ===== TOP NAV (PRO) ===== */
+.topnav{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin: 10px 0 22px;
+  flex-wrap:wrap;
+}
+.navlink{
+  text-decoration:none;
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--txt);
+  border:1px solid var(--stroke);
+  background:rgba(255,255,255,.04);
+  transition:.15s;
+}
+.navlink:hover{
+  background:rgba(56,189,248,.12);
+  border-color:rgba(56,189,248,.4);
+  transform:translateY(-1px);
+}
+.navlink.primary{
+  border-color: rgba(56,189,248,.45);
+  background: linear-gradient(90deg, rgba(56,189,248,.18), rgba(34,211,238,.10));
+}
+.navlink.primary:hover{filter:brightness(1.05)}
+
+/* ===== MODAL (Kılavuz) ===== */
+.modal{
+  position:fixed; inset:0;
+  display:none;
+  align-items:center; justify-content:center;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  z-index: 999;
+  padding: 16px;
+}
+.modal.show{display:flex}
+.modal-card{
+  width:min(720px, 100%);
+  border-radius: 18px;
+  border:1px solid var(--stroke);
+  background: rgba(15,23,42,.92);
+  box-shadow: 0 20px 80px rgba(0,0,0,.65);
+  padding: 16px;
+}
+.modal-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.modal-title{font-weight:900; font-size:16px}
+.modal-close{
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.04);
+  color: var(--txt);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor:pointer;
+  font-weight:900;
+}
+.modal-close:hover{border-color: rgba(56,189,248,.4)}
+.modal-body{
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.modal-body b{color: var(--txt)}
+
+/* footer iletişim */
+.footer-pro{
+  text-align:center;
+  color: rgba(170,182,207,.72);
+  font-size:12px;
+  margin-top: 16px;
+}
+.footer-pro a{color: var(--txt); text-decoration:none; border-bottom:1px dashed rgba(56,189,248,.35)}
+.footer-pro a:hover{border-bottom-color: rgba(56,189,248,.65)}
+
 </style>
 </head>
 
