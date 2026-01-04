@@ -24,27 +24,33 @@
       --glow: 0 0 22px rgba(34,211,238,.14), 0 0 70px rgba(56,189,248,.10);
     }
 
+    /* ===============================
+       EKLENDİ: Aşağıdaki blok senin kodunda <style> içine HTML olarak yapıştırılmıştı.
+       Silmeden, sadece yorum içine aldım ki sayfa bozulmasın.
+       =============================== */
+    /*
     <!-- KEY GATE (Başta görünür) -->
-<div id="keyGate" class="keyGate">
-  <div class="keyCard">
-    <div class="keyHead">
-      <div class="keyTitle">🔒 Key Gerekli</div>
-      <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
-    </div>
+    <div id="keyGate" class="keyGate">
+      <div class="keyCard">
+        <div class="keyHead">
+          <div class="keyTitle">🔒 Key Gerekli</div>
+          <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
+        </div>
 
-    <label class="keyLabel" for="keyInput">Key</label>
-    <div class="keyRow">
-      <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX" autocomplete="off" />
-      <button id="keyBtn" class="keyBtn">Giriş</button>
-    </div>
+        <label class="keyLabel" for="keyInput">Key</label>
+        <div class="keyRow">
+          <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX" autocomplete="off" />
+          <button id="keyBtn" class="keyBtn">Giriş</button>
+        </div>
 
-    <div id="keyMsg" class="keyMsg"></div>
+        <div id="keyMsg" class="keyMsg"></div>
 
-    <div class="keyFoot">
-      <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
+        <div class="keyFoot">
+          <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    */
 
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -142,15 +148,9 @@
       font-weight: 800;
       font-size: 13px;
       transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+      box-shadow: 0 0 0 1px rgba(34,211,238,.06) inset;
     }
-    
-    .navlink{
-  box-shadow: 0 0 0 1px rgba(34,211,238,.06) inset;
-}
-.navlink:active{
-  transform: translateY(0);
-}
-
+    .navlink:active{ transform: translateY(0); }
     .navlink:hover{
       border-color: rgba(34,211,238,.28);
       transform: translateY(-1px);
@@ -306,9 +306,7 @@
     }
     .cta:hover{filter: brightness(1.06); transform: translateY(-1px)}
     .cta:active{transform: translateY(0px)}
-    .cta.pulse{
-      animation: pulse 520ms ease-out;
-    }
+    .cta.pulse{ animation: pulse 520ms ease-out; }
     @keyframes pulse{
       0%{transform: translateY(0); box-shadow: 0 0 0 rgba(34,211,238,.0)}
       40%{transform: translateY(-1px); box-shadow: 0 0 30px rgba(34,211,238,.18)}
@@ -407,9 +405,7 @@
     }
     .copy:hover{border-color: rgba(34,211,238,.22); color: var(--txt); transform: translateY(-1px)}
     .copy:active{transform: translateY(0px)}
-    .copy.pop{
-      animation: pop 360ms ease-out;
-    }
+    .copy.pop{ animation: pop 360ms ease-out; }
     @keyframes pop{
       0%{transform: translateY(0) scale(1)}
       35%{transform: translateY(-1px) scale(1.04)}
@@ -514,30 +510,124 @@
       font-size: 12px;
     }
 
+    /* ===============================
+       EKLENDİ: Senin kodda <style> içinde bir <style> daha vardı.
+       Silmeden yorum içine aldım.
+       =============================== */
+    /*
     <style>
-  /* Sitenin eski CSS'leri */
+      .keyGate{
+        position:fixed; inset:0;
+        display:flex; align-items:center; justify-content:center;
+        background: rgba(0,0,0,.72);
+        backdrop-filter: blur(6px);
+        z-index:9999;
+      }
 
-  /* ===== KEY GATE CSS (B) ===== */
-  .keyGate{
-    position:fixed; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    background: rgba(0,0,0,.72);
-    backdrop-filter: blur(6px);
-    z-index:9999;
-  }
+      .keyCard{
+        width:min(520px, 92vw);
+        background: rgba(15, 23, 42, .88);
+        border-radius: 18px;
+        padding: 18px;
+      }
+    </style>
+    */
 
-  .keyCard{
-    width:min(520px, 92vw);
-    background: rgba(15, 23, 42, .88);
-    border-radius: 18px;
-    padding: 18px;
-  }
-</style>
-  
+    /* ===============================
+       EKLENDİ: Key Gate CSS (doğru şekilde)
+       =============================== */
+    .keyGate{
+      position:fixed; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(6px);
+      z-index:9999;
+      padding: 16px;
+    }
+    .keyCard{
+      width:min(520px, 92vw);
+      background: rgba(15, 23, 42, .88);
+      border: 1px solid rgba(148,163,184,.14);
+      box-shadow: 0 18px 70px rgba(0,0,0,.65);
+      border-radius: 18px;
+      padding: 18px;
+    }
+    .keyHead{margin-bottom:12px}
+    .keyTitle{font-weight:900; font-size:18px}
+    .keyDesc{color: var(--muted); font-size:13px; margin-top:6px}
+    .keyLabel{display:block; color: var(--muted); font-size:12px; margin: 10px 0 8px}
+    .keyRow{display:flex; gap:10px; align-items:stretch}
+    .keyInput{
+      flex:1 1 auto;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.04);
+      color:var(--txt);
+      outline:none;
+      box-shadow: 0 0 0 1px rgba(148,163,184,.06);
+    }
+    .keyInput:focus{
+      border-color: rgba(34,211,238,.42);
+      box-shadow: 0 0 0 3px rgba(34,211,238,.14), 0 0 22px rgba(56,189,248,.10);
+    }
+    .keyBtn{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(34,211,238,.35);
+      background: linear-gradient(90deg, rgba(56,189,248,.16), rgba(34,211,238,.12));
+      color:var(--txt);
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .keyBtn:hover{filter: brightness(1.06)}
+    .keyMsg{margin-top:10px; min-height:18px; font-size:13px}
+    .keyMsg.ok{color:#86efac}
+    .keyMsg.bad{color:#fca5a5}
+    .keyFoot{margin-top:10px; display:flex; justify-content:space-between; align-items:center}
+    .keyLink{
+      border:1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--txt);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .keyLink:hover{border-color: rgba(34,211,238,.22)}
   </style>
 </head>
 
 <body>
+  <!-- ===============================
+       EKLENDİ: Key Gate HTML (doğru yer: body)
+       =============================== -->
+  <div id="keyGate" class="keyGate">
+    <div class="keyCard">
+      <div class="keyHead">
+        <div class="keyTitle">🔒 Key Gerekli</div>
+        <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
+      </div>
+
+      <label class="keyLabel" for="keyInput">Key</label>
+      <div class="keyRow">
+        <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX-XXXX" autocomplete="off" />
+        <button id="keyBtn" class="keyBtn" type="button">Giriş</button>
+      </div>
+
+      <div id="keyMsg" class="keyMsg"></div>
+
+      <div class="keyFoot">
+        <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
+        <a class="keyLink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener" style="text-decoration:none;">
+          Key satın al (Discord)
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div class="stars"></div>
 
   <div class="wrap">
@@ -549,7 +639,6 @@
 
     <!-- TOP LINKS -->
     <nav class="topnav" aria-label="Kısayollar">
-      <!-- BURAYI KENDİ DISCORD PROFİL LİNKİNLE DEĞİŞTİR -->
       <a class="navlink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener">Discord Profilim</a>
       <a class="navlink" href="#" id="helpBtn">Kılavuz</a>
     </nav>
@@ -625,13 +714,12 @@
           <ul class="list" id="list"></ul>
         </div>
 
-       <footer>
-  BRDN • Demo Panel • İletişim:
-  <a href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener" style="color: var(--cyan); text-decoration:none; font-weight:900;">
-    Discord Profilim
-  </a>
-</footer>
-
+        <footer>
+          BRDN • Demo Panel • İletişim:
+          <a href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener" style="color: var(--cyan); text-decoration:none; font-weight:900;">
+            Discord Profilim
+          </a>
+        </footer>
 
       </div>
     </section>
@@ -660,6 +748,7 @@
     </div>
   </div>
 
+  <!-- ========== SENİN ORİJİNAL SCRIPTİN (DOKUNMADIM) ========== -->
   <script>
     const emailEl = document.getElementById('email');
     const countEl = document.getElementById('count');
@@ -891,6 +980,8 @@
       if(e.key === 'Escape') modalBack.style.display = 'none';
     });
   </script>
+
+  <!-- ========== SENİN ORİJİNAL KEY SCRIPTİN (DOKUNMADIM) ========== -->
   <script>
 /**
  * Basit key sistemi (GitHub Pages uyumlu)
@@ -996,6 +1087,110 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+  <!-- ===============================
+       EKLENDİ: Cloudflare Worker ile gerçek doğrulama
+       - Eski scriptleri silmeden, buton listenerlarını "node clone" ile sıfırlıyoruz
+       - /verify endpointi ile key kontrol ediyoruz
+       =============================== -->
+  <script>
+    const API_BASE = "https://brdnj4j-auth.berdan-gunan0.workers.dev";
+    const KEY_SAVED = "brdn_key_saved_v2";
+
+    async function verifyKeyWithServer(key){
+      const r = await fetch(API_BASE + "/verify", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ key })
+      });
+      return r.json().catch(()=>({ok:false,error:"BAD_RESPONSE"}));
+    }
+
+    function setGateMsg(text, ok){
+      const el = document.getElementById("keyMsg");
+      if(!el) return;
+      el.textContent = text;
+      el.className = "keyMsg " + (ok ? "ok" : "bad");
+    }
+
+    function openGate(){
+      const g = document.getElementById("keyGate");
+      if(g) g.style.display = "none";
+    }
+
+    function showGate(){
+      const g = document.getElementById("keyGate");
+      if(g) g.style.display = "flex";
+    }
+
+    function errToText(err){
+      if(err === "EXPIRED") return "Key süresi dolmuş ⏳";
+      if(err === "REVOKED") return "Key iptal edilmiş 🚫";
+      if(err === "INVALID_KEY") return "Key hatalı ❌";
+      if(err === "KEY_REQUIRED") return "Key gir ❗";
+      return "Key doğrulanamadı ❌";
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const input = document.getElementById("keyInput");
+      const oldBtn = document.getElementById("keyBtn");
+      const logout = document.getElementById("logoutKey");
+
+      // 1) Eski butonun listenerlarını silmeden devre dışı bırakma:
+      //    node clone => eski addEventListener'lar gider.
+      if(oldBtn && oldBtn.parentNode){
+        const newBtn = oldBtn.cloneNode(true);
+        oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+
+        // 2) Yeni login handler (server verify)
+        const doLogin = async () => {
+          const k = (input?.value || "").trim();
+          if(!k){ setGateMsg("Key gir.", false); return; }
+
+          setGateMsg("Kontrol ediliyor...", true);
+          const res = await verifyKeyWithServer(k);
+
+          if(res.ok){
+            localStorage.setItem(KEY_SAVED, k);
+            setGateMsg("Giriş başarılı ✅", true);
+            if(logout) logout.style.display = "inline-block";
+            setTimeout(openGate, 250);
+          } else {
+            setGateMsg(errToText(res.error), false);
+          }
+        };
+
+        newBtn.addEventListener("click", doLogin);
+        input?.addEventListener("keydown", (e) => {
+          if(e.key === "Enter") doLogin();
+        });
+
+        // 3) Kayıtlı key varsa otomatik dene
+        const saved = (localStorage.getItem(KEY_SAVED) || "").trim();
+        if(saved){
+          const res = await verifyKeyWithServer(saved);
+          if(res.ok){
+            if(logout) logout.style.display = "inline-block";
+            openGate();
+          } else {
+            localStorage.removeItem(KEY_SAVED);
+            showGate();
+          }
+        } else {
+          showGate();
+        }
+
+        // 4) logout (key sıfırla)
+        logout?.addEventListener("click", () => {
+          localStorage.removeItem(KEY_SAVED);
+          setGateMsg("Key sıfırlandı. Tekrar giriş yap.", false);
+          if(input) input.value = "";
+          if(logout) logout.style.display = "none";
+          showGate();
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
