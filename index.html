@@ -24,6 +24,28 @@
       --glow: 0 0 22px rgba(34,211,238,.14), 0 0 70px rgba(56,189,248,.10);
     }
 
+    <!-- KEY GATE (Başta görünür) -->
+<div id="keyGate" class="keyGate">
+  <div class="keyCard">
+    <div class="keyHead">
+      <div class="keyTitle">🔒 Key Gerekli</div>
+      <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
+    </div>
+
+    <label class="keyLabel" for="keyInput">Key</label>
+    <div class="keyRow">
+      <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX" autocomplete="off" />
+      <button id="keyBtn" class="keyBtn">Giriş</button>
+    </div>
+
+    <div id="keyMsg" class="keyMsg"></div>
+
+    <div class="keyFoot">
+      <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
+    </div>
+  </div>
+</div>
+
     *{box-sizing:border-box}
     html,body{height:100%}
 
@@ -491,6 +513,27 @@
       font-weight: 900;
       font-size: 12px;
     }
+
+    <style>
+  /* Sitenin eski CSS'leri */
+
+  /* ===== KEY GATE CSS (B) ===== */
+  .keyGate{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(6px);
+    z-index:9999;
+  }
+
+  .keyCard{
+    width:min(520px, 92vw);
+    background: rgba(15, 23, 42, .88);
+    border-radius: 18px;
+    padding: 18px;
+  }
+</style>
+  
   </style>
 </head>
 
@@ -848,5 +891,111 @@
       if(e.key === 'Escape') modalBack.style.display = 'none';
     });
   </script>
+  <script>
+/**
+ * Basit key sistemi (GitHub Pages uyumlu)
+ * - Doğru key => localStorage'a kaydeder (24 saat)
+ * - Yanlış key => panel açılmaz
+ *
+ * Not: Bu client-side, %100 güvenli değildir.
+ */
+
+const KEY_STORAGE = "brdn_key_ok_v1";
+const KEY_EXP_STORAGE = "brdn_key_exp_v1";
+
+// 24 saat
+const KEY_TTL_MS = 24 * 60 * 60 * 1000;
+
+// Buraya kendi keylerini yaz (çoğaltabilirsin)
+const VALID_KEYS = new Set([
+  "BRDN-2026-ALIAS",
+  "BRDN-PANEL-OK",
+  "CBBERBER-KEY"
+]);
+
+function now(){ return Date.now(); }
+
+function isKeyValid(k){
+  if(!k) return false;
+  const key = k.trim();
+  return VALID_KEYS.has(key);
+}
+
+function gateOpen(){
+  const gate = document.getElementById("keyGate");
+  if(gate) gate.style.display = "none";
+}
+
+function gateShow(){
+  const gate = document.getElementById("keyGate");
+  if(gate) gate.style.display = "flex";
+}
+
+function setMsg(text, ok){
+  const el = document.getElementById("keyMsg");
+  if(!el) return;
+  el.textContent = text;
+  el.className = "keyMsg " + (ok ? "ok" : "bad");
+}
+
+function saveOk(){
+  localStorage.setItem(KEY_STORAGE, "1");
+  localStorage.setItem(KEY_EXP_STORAGE, String(now() + KEY_TTL_MS));
+}
+
+function clearOk(){
+  localStorage.removeItem(KEY_STORAGE);
+  localStorage.removeItem(KEY_EXP_STORAGE);
+}
+
+function checkExisting(){
+  const ok = localStorage.getItem(KEY_STORAGE) === "1";
+  const exp = Number(localStorage.getItem(KEY_EXP_STORAGE) || 0);
+  if(ok && exp && now() < exp){
+    gateOpen();
+    const logout = document.getElementById("logoutKey");
+    if(logout) logout.style.display = "inline-block";
+    return true;
+  }
+  clearOk();
+  return false;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("keyInput");
+  const btn = document.getElementById("keyBtn");
+  const logout = document.getElementById("logoutKey");
+
+  // zaten giriş yaptıysa aç
+  if(checkExisting()) return;
+
+  // giriş dene
+  function tryLogin(){
+    const k = input.value;
+    if(isKeyValid(k)){
+      saveOk();
+      setMsg("Giriş başarılı ✅", true);
+      setTimeout(gateOpen, 350);
+      if(logout) logout.style.display = "inline-block";
+    }else{
+      setMsg("Key hatalı ❌", false);
+    }
+  }
+
+  btn?.addEventListener("click", tryLogin);
+  input?.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") tryLogin();
+  });
+
+  logout?.addEventListener("click", () => {
+    clearOk();
+    setMsg("Key sıfırlandı. Tekrar giriş yap.", false);
+    gateShow();
+    if(input) input.value = "";
+    if(logout) logout.style.display = "none";
+  });
+});
+</script>
+
 </body>
 </html>
