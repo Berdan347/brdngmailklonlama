@@ -7,7 +7,6 @@
 
   <style>
     :root{
-      /* Dark professional palette (no purple/pink) */
       --bg0:#06080d;
       --bg1:#0b1220;
 
@@ -16,41 +15,13 @@
       --txt:#e8eef9;
       --muted:#aab6cf;
 
-      --accent:#38bdf8;   /* sky */
+      --accent:#38bdf8;
       --cyan:#22d3ee;
 
       --radius: 22px;
       --shadow: 0 0 0 1px rgba(148,163,184,.12), 0 18px 60px rgba(0,0,0,.60);
       --glow: 0 0 22px rgba(34,211,238,.14), 0 0 70px rgba(56,189,248,.10);
     }
-
-    /* ===============================
-       EKLENDİ: Aşağıdaki blok senin kodunda <style> içine HTML olarak yapıştırılmıştı.
-       Silmeden, sadece yorum içine aldım ki sayfa bozulmasın.
-       =============================== */
-    /*
-    <!-- KEY GATE (Başta görünür) -->
-    <div id="keyGate" class="keyGate">
-      <div class="keyCard">
-        <div class="keyHead">
-          <div class="keyTitle">🔒 Key Gerekli</div>
-          <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
-        </div>
-
-        <label class="keyLabel" for="keyInput">Key</label>
-        <div class="keyRow">
-          <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX" autocomplete="off" />
-          <button id="keyBtn" class="keyBtn">Giriş</button>
-        </div>
-
-        <div id="keyMsg" class="keyMsg"></div>
-
-        <div class="keyFoot">
-          <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
-        </div>
-      </div>
-    </div>
-    */
 
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -442,6 +413,7 @@
       gap:10px;
       min-width: 220px;
       justify-content: center;
+      z-index: 60;
     }
     .toast.show{
       opacity:1;
@@ -464,7 +436,7 @@
       background: rgba(34,211,238,.18);
     }
 
-    /* Modal (Kılavuz) */
+    /* Modal */
     .modalBack{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -511,89 +483,7 @@
     }
 
     /* ===============================
-       EKLENDİ: Senin kodda <style> içinde bir <style> daha vardı.
-       Silmeden yorum içine aldım.
-       =============================== */
-    /*
-    <style>
-      .keyGate{
-        position:fixed; inset:0;
-        display:flex; align-items:center; justify-content:center;
-        background: rgba(0,0,0,.72);
-        backdrop-filter: blur(6px);
-        z-index:9999;
-      }
-
-      .keyCard{
-        width:min(520px, 92vw);
-        background: rgba(15, 23, 42, .88);
-        border-radius: 18px;
-        padding: 18px;
-      }
-
-    /* ===== EK: KEY GATE ===== */
-.keyGate{
-  position:fixed; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  background: rgba(0,0,0,.72);
-  backdrop-filter: blur(6px);
-  z-index:9999;
-  padding:16px;
-}
-.keyCard{
-  width:min(520px, 92vw);
-  background: rgba(15, 23, 42, .88);
-  border: 1px solid rgba(148,163,184,.14);
-  box-shadow: 0 18px 70px rgba(0,0,0,.65);
-  border-radius: 18px;
-  padding: 18px;
-}
-.keyHead{margin-bottom:12px}
-.keyTitle{font-weight:900; font-size:18px}
-.keyDesc{color: var(--muted); font-size:13px; margin-top:6px}
-.keyLabel{display:block; color: var(--muted); font-size:12px; margin: 10px 0 8px}
-.keyRow{display:flex; gap:10px; align-items:stretch}
-.keyInput{
-  flex:1 1 auto;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(148,163,184,.14);
-  background: rgba(255,255,255,.04);
-  color:var(--txt);
-  outline:none;
-}
-.keyBtn{
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid rgba(34,211,238,.35);
-  background: linear-gradient(90deg, rgba(56,189,248,.16), rgba(34,211,238,.12));
-  color:var(--txt);
-  font-weight:900;
-  cursor:pointer;
-  white-space:nowrap;
-}
-.keyMsg{margin-top:10px; min-height:18px; font-size:13px}
-.keyMsg.ok{color:#86efac}
-.keyMsg.bad{color:#fca5a5}
-.keyFoot{margin-top:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
-.keyLink{
-  border:1px solid rgba(148,163,184,.14);
-  background: rgba(255,255,255,.04);
-  color: var(--txt);
-  border-radius: 12px;
-  padding: 8px 10px;
-  cursor:pointer;
-  font-weight: 900;
-  font-size: 12px;
-  text-decoration:none;
-}
-.keyLink:hover{border-color: rgba(34,211,238,.22)}
-
-    </style>
-    */
-
-    /* ===============================
-       EKLENDİ: Key Gate CSS (doğru şekilde)
+       KEY GATE (CSS)
        =============================== */
     .keyGate{
       position:fixed; inset:0;
@@ -604,7 +494,7 @@
       padding: 16px;
     }
     .keyCard{
-      width:min(520px, 92vw);
+      width:min(560px, 92vw);
       background: rgba(15, 23, 42, .88);
       border: 1px solid rgba(148,163,184,.14);
       box-shadow: 0 18px 70px rgba(0,0,0,.65);
@@ -615,9 +505,9 @@
     .keyTitle{font-weight:900; font-size:18px}
     .keyDesc{color: var(--muted); font-size:13px; margin-top:6px}
     .keyLabel{display:block; color: var(--muted); font-size:12px; margin: 10px 0 8px}
-    .keyRow{display:flex; gap:10px; align-items:stretch}
+    .keyRow{display:flex; gap:10px; align-items:stretch; flex-wrap:wrap}
     .keyInput{
-      flex:1 1 auto;
+      flex:1 1 320px;
       padding:12px 12px;
       border-radius:14px;
       border:1px solid rgba(148,163,184,.14);
@@ -631,6 +521,7 @@
       box-shadow: 0 0 0 3px rgba(34,211,238,.14), 0 0 22px rgba(56,189,248,.10);
     }
     .keyBtn{
+      flex:0 0 auto;
       padding:12px 14px;
       border-radius:14px;
       border:1px solid rgba(34,211,238,.35);
@@ -641,10 +532,11 @@
       white-space:nowrap;
     }
     .keyBtn:hover{filter: brightness(1.06)}
+    .keyBtn[disabled]{opacity:.6; cursor:not-allowed}
     .keyMsg{margin-top:10px; min-height:18px; font-size:13px}
     .keyMsg.ok{color:#86efac}
     .keyMsg.bad{color:#fca5a5}
-    .keyFoot{margin-top:10px; display:flex; justify-content:space-between; align-items:center}
+    .keyFoot{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between}
     .keyLink{
       border:1px solid rgba(148,163,184,.14);
       background: rgba(255,255,255,.04);
@@ -654,41 +546,18 @@
       cursor:pointer;
       font-weight: 900;
       font-size: 12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .keyLink:hover{border-color: rgba(34,211,238,.22)}
   </style>
 </head>
 
 <body>
-  <!-- ===== EK: KEY GATE HTML ===== -->
-<div id="keyGate" class="keyGate">
-  <div class="keyCard">
-    <div class="keyHead">
-      <div class="keyTitle">🔒 Key Gerekli</div>
-      <div class="keyDesc">Panele erişmek için anahtarı gir.</div>
-    </div>
-
-    <label class="keyLabel" for="keyInput">Key</label>
-    <div class="keyRow">
-      <input id="keyInput" class="keyInput" placeholder="Örn: BRDN-XXXX-XXXX-XXXX" autocomplete="off" />
-      <button id="keyBtn" class="keyBtn" type="button">Giriş</button>
-    </div>
-
-    <div id="keyMsg" class="keyMsg"></div>
-
-    <div class="keyFoot">
-      <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
-      <a class="keyLink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener">
-        Key satın al (Discord)
-      </a>
-    </div>
-  </div>
-</div>
-
-  <!-- ===============================
-       EKLENDİ: Key Gate HTML (doğru yer: body)
-       =============================== -->
-  <div id="keyGate" class="keyGate">
+  <!-- KEY GATE HTML -->
+  <div id="keyGate" class="keyGate" aria-modal="true" role="dialog">
     <div class="keyCard">
       <div class="keyHead">
         <div class="keyTitle">🔒 Key Gerekli</div>
@@ -705,9 +574,7 @@
 
       <div class="keyFoot">
         <button id="logoutKey" class="keyLink" type="button" style="display:none;">Key’i sıfırla</button>
-        <a class="keyLink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener" style="text-decoration:none;">
-          Key satın al (Discord)
-        </a>
+        <a class="keyLink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener">Key satın al (Discord)</a>
       </div>
     </div>
   </div>
@@ -721,7 +588,6 @@
 
     <h1>Alias Üretim Paneli</h1>
 
-    <!-- TOP LINKS -->
     <nav class="topnav" aria-label="Kısayollar">
       <a class="navlink" href="https://discord.com/users/816990858515709962" target="_blank" rel="noopener">Discord Profilim</a>
       <a class="navlink" href="#" id="helpBtn">Kılavuz</a>
@@ -818,21 +684,17 @@
         <h3 id="modalTitle">Kılavuz</h3>
         <button class="xbtn" id="closeModal" type="button">Kapat</button>
       </div>
-      <p>
-        Bu panel Gmail alias’larını <b>liste</b> şeklinde üretir. Üretilen adresler Gmail’e göre aynı gelen kutusuna düşebilir.
-      </p>
+      <p>Bu panel Gmail alias’larını <b>liste</b> şeklinde üretir.</p>
       <ul>
-        <li><b>+tag</b>: hızlı üretim, düzenli liste. Ör: <span class="kbd">local+1@gmail.com</span></li>
-        <li><b>Nokta</b>: Gmail noktayı çoğu zaman yok sayar. Ör: <span class="kbd">lo.cal@gmail.com</span></li>
-        <li><b>Karma</b>: çeşit artırır. Ör: <span class="kbd">lo.cal+1@gmail.com</span></li>
+        <li><b>+tag</b>: Ör: <span class="kbd">local+1@gmail.com</span></li>
+        <li><b>Nokta</b>: Ör: <span class="kbd">lo.cal@gmail.com</span></li>
+        <li><b>Karma</b>: Ör: <span class="kbd">lo.cal+1@gmail.com</span></li>
       </ul>
-      <p>
-        İpucu: Tek satır kopyalamak için listeden <span class="kbd">Kopyala</span> butonunu kullan.
-      </p>
+      <p>Tek satır kopyalamak için listeden <span class="kbd">Kopyala</span> butonunu kullan.</p>
     </div>
   </div>
 
-  <!-- ========== SENİN ORİJİNAL SCRIPTİN (DOKUNMADIM) ========== -->
+  <!-- Alias generator script -->
   <script>
     const emailEl = document.getElementById('email');
     const countEl = document.getElementById('count');
@@ -863,7 +725,7 @@
 
     function pulseBtn(btn){
       btn.classList.remove('pulse');
-      void btn.offsetWidth; // reflow
+      void btn.offsetWidth;
       btn.classList.add('pulse');
       setTimeout(()=> btn.classList.remove('pulse'), 600);
     }
@@ -1051,7 +913,6 @@
       showToast('Sıfırlandı ✅');
     });
 
-    // Modal
     helpBtn.addEventListener('click', (e)=>{
       e.preventDefault();
       modalBack.style.display = 'flex';
@@ -1065,191 +926,104 @@
     });
   </script>
 
-  <!-- ========== SENİN ORİJİNAL KEY SCRIPTİN (DOKUNMADIM) ========== -->
+  <!-- Key Gate (Cloudflare Worker verify) -->
   <script>
-/**
- * Basit key sistemi (GitHub Pages uyumlu)
- * - Doğru key => localStorage'a kaydeder (24 saat)
- * - Yanlış key => panel açılmaz
- *
- * Not: Bu client-side, %100 güvenli değildir.
- */
+    (function(){
+      if (window.__BRDN_GATE_INSTALLED__) return;
+      window.__BRDN_GATE_INSTALLED__ = true;
 
-const KEY_STORAGE = "brdn_key_ok_v1";
-const KEY_EXP_STORAGE = "brdn_key_exp_v1";
+      const API_BASE = "https://brdnj4j-auth.berdan-gunan0.workers.dev"; // <-- senin worker
+      const KEY_SAVED = "brdn_key_saved_v2";
 
-// 24 saat
-const KEY_TTL_MS = 24 * 60 * 60 * 1000;
+      const input = document.getElementById("keyInput");
+      const btn = document.getElementById("keyBtn");
+      const logout = document.getElementById("logoutKey");
 
-// Buraya kendi keylerini yaz (çoğaltabilirsin)
-const VALID_KEYS = new Set([
-  "BRDN-2026-ALIAS",
-  "BRDN-PANEL-OK",
-  "CBBERBER-KEY"
-]);
+      function setMsg(text, ok){
+        const el = document.getElementById("keyMsg");
+        if(!el) return;
+        el.textContent = text;
+        el.className = "keyMsg " + (ok ? "ok" : "bad");
+      }
+      function openGate(){
+        const g = document.getElementById("keyGate");
+        if(g) g.style.display = "none";
+      }
+      function showGate(){
+        const g = document.getElementById("keyGate");
+        if(g) g.style.display = "flex";
+      }
+      function errToText(err){
+        if(err === "EXPIRED") return "Key süresi dolmuş ⏳";
+        if(err === "REVOKED") return "Key iptal edilmiş 🚫";
+        if(err === "INVALID_KEY") return "Key hatalı ❌";
+        if(err === "KEY_REQUIRED") return "Key gir ❗";
+        return "Key doğrulanamadı ❌";
+      }
 
-function now(){ return Date.now(); }
+      async function verifyKeyWithServer(key){
+        const r = await fetch(API_BASE + "/verify", {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({ key })
+        });
+        return r.json().catch(()=>({ok:false,error:"BAD_RESPONSE"}));
+      }
 
-function isKeyValid(k){
-  if(!k) return false;
-  const key = k.trim();
-  return VALID_KEYS.has(key);
-}
+      async function doLogin(){
+        const k = (input?.value || "").trim();
+        if(!k){ setMsg("Key gir.", false); return; }
 
-function gateOpen(){
-  const gate = document.getElementById("keyGate");
-  if(gate) gate.style.display = "none";
-}
+        btn.disabled = true;
+        setMsg("Kontrol ediliyor...", true);
 
-function gateShow(){
-  const gate = document.getElementById("keyGate");
-  if(gate) gate.style.display = "flex";
-}
+        try{
+          const res = await verifyKeyWithServer(k);
+          if(res.ok){
+            localStorage.setItem(KEY_SAVED, k);
+            setMsg("Giriş başarılı ✅", true);
+            if(logout) logout.style.display = "inline-block";
+            setTimeout(openGate, 250);
+          } else {
+            setMsg(errToText(res.error), false);
+          }
+        }catch(e){
+          setMsg("Sunucuya ulaşılamadı ❌", false);
+        }finally{
+          btn.disabled = false;
+        }
+      }
 
-function setMsg(text, ok){
-  const el = document.getElementById("keyMsg");
-  if(!el) return;
-  el.textContent = text;
-  el.className = "keyMsg " + (ok ? "ok" : "bad");
-}
+      document.addEventListener("DOMContentLoaded", async ()=>{
+        // Kayıtlı key varsa otomatik dene
+        const saved = (localStorage.getItem(KEY_SAVED) || "").trim();
+        if(saved){
+          setMsg("Kayıtlı key kontrol ediliyor...", true);
+          try{
+            const res = await verifyKeyWithServer(saved);
+            if(res.ok){
+              if(logout) logout.style.display = "inline-block";
+              openGate();
+              return;
+            }
+          }catch{}
+          localStorage.removeItem(KEY_SAVED);
+        }
+        showGate();
+      });
 
-function saveOk(){
-  localStorage.setItem(KEY_STORAGE, "1");
-  localStorage.setItem(KEY_EXP_STORAGE, String(now() + KEY_TTL_MS));
-}
+      btn?.addEventListener("click", doLogin);
+      input?.addEventListener("keydown", (e)=>{ if(e.key === "Enter") doLogin(); });
 
-function clearOk(){
-  localStorage.removeItem(KEY_STORAGE);
-  localStorage.removeItem(KEY_EXP_STORAGE);
-}
-
-function checkExisting(){
-  const ok = localStorage.getItem(KEY_STORAGE) === "1";
-  const exp = Number(localStorage.getItem(KEY_EXP_STORAGE) || 0);
-  if(ok && exp && now() < exp){
-    gateOpen();
-    const logout = document.getElementById("logoutKey");
-    if(logout) logout.style.display = "inline-block";
-    return true;
-  }
-  clearOk();
-  return false;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("keyInput");
-  const btn = document.getElementById("keyBtn");
-  const logout = document.getElementById("logoutKey");
-
-  // zaten giriş yaptıysa aç
-  if(checkExisting()) return;
-
-  // giriş dene
-  function tryLogin(){
-    const k = input.value;
-    if(isKeyValid(k)){
-      saveOk();
-      setMsg("Giriş başarılı ✅", true);
-      setTimeout(gateOpen, 350);
-      if(logout) logout.style.display = "inline-block";
-    }else{
-      setMsg("Key hatalı ❌", false);
-    }
-  }
-
-  btn?.addEventListener("click", tryLogin);
-  input?.addEventListener("keydown", (e) => {
-    if(e.key === "Enter") tryLogin();
-  });
-
-  logout?.addEventListener("click", () => {
-    clearOk();
-    setMsg("Key sıfırlandı. Tekrar giriş yap.", false);
-    gateShow();
-    if(input) input.value = "";
-    if(logout) logout.style.display = "none";
-  });
-});
-</script>
-  
-/* ===== EK: Cloudflare Worker doğrulama ===== */
-  
-const API_BASE = "https://brdnj4j-auth.berdan-gunan0.workers.dev";
-const KEY_SAVED = "brdn_key_saved_v2";
-
-function gateOpen(){ const g=document.getElementById("keyGate"); if(g) g.style.display="none"; }
-function gateShow(){ const g=document.getElementById("keyGate"); if(g) g.style.display="flex"; }
-function setGateMsg(text, ok){
-  const el=document.getElementById("keyMsg");
-  if(!el) return;
-  el.textContent=text;
-  el.className="keyMsg " + (ok ? "ok" : "bad");
-}
-function errToText(err){
-  if(err==="EXPIRED") return "Key süresi dolmuş ⏳";
-  if(err==="REVOKED") return "Key iptal edilmiş 🚫";
-  if(err==="INVALID_KEY") return "Key hatalı ❌";
-  if(err==="KEY_REQUIRED") return "Key gir ❗";
-  return "Key doğrulanamadı ❌";
-}
-
-async function verifyKeyWithServer(key){
-  const r = await fetch(API_BASE + "/verify", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ key })
-  });
-  return r.json().catch(()=>({ok:false,error:"BAD_RESPONSE"}));
-}
-
-document.addEventListener("DOMContentLoaded", async ()=>{
-  const input = document.getElementById("keyInput");
-  const btn = document.getElementById("keyBtn");
-  const logout = document.getElementById("logoutKey");
-
-  // Kayıtlı key varsa otomatik doğrula
-  const saved = (localStorage.getItem(KEY_SAVED) || "").trim();
-  if(saved){
-    const res = await verifyKeyWithServer(saved);
-    if(res.ok){
-      if(logout) logout.style.display="inline-block";
-      gateOpen();
-    } else {
-      localStorage.removeItem(KEY_SAVED);
-      gateShow();
-    }
-  } else {
-    gateShow();
-  }
-
-  async function doLogin(){
-    const k = (input?.value || "").trim();
-    if(!k){ setGateMsg("Key gir.", false); return; }
-    setGateMsg("Kontrol ediliyor...", true);
-
-    const res = await verifyKeyWithServer(k);
-    if(res.ok){
-      localStorage.setItem(KEY_SAVED, k);
-      setGateMsg("Giriş başarılı ✅", true);
-      if(logout) logout.style.display="inline-block";
-      setTimeout(gateOpen, 200);
-    } else {
-      setGateMsg(errToText(res.error), false);
-    }
-  }
-
-  btn?.addEventListener("click", doLogin);
-  input?.addEventListener("keydown", (e)=>{ if(e.key==="Enter") doLogin(); });
-
-  logout?.addEventListener("click", ()=>{
-    localStorage.removeItem(KEY_SAVED);
-    setGateMsg("Key sıfırlandı. Tekrar giriş yap.", false);
-    if(input) input.value="";
-    if(logout) logout.style.display="none";
-    gateShow();
-  });
-});
-</script>
+      logout?.addEventListener("click", ()=>{
+        localStorage.removeItem(KEY_SAVED);
+        setMsg("Key sıfırlandı. Tekrar giriş yap.", false);
+        if(input) input.value = "";
+        if(logout) logout.style.display = "none";
+        showGate();
+      });
+    })();
+  </script>
 
 </body>
 </html>
